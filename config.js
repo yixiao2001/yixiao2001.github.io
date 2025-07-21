@@ -89,6 +89,12 @@ const siteConfig = {
         "ISSRE 2025 Artifact Evaluation Committee"
       ]
     },
+      {
+        "category": "Sub-Reviews",
+        "items": [
+            "2025 - ICSE, FSE, ISSTA, ASE, KDD, etc."
+        ]
+      },
     {
       "category": "Academic Activities",
       "items": [
