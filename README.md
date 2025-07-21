@@ -1,171 +1,106 @@
-# Yi Xiao - Academic Homepage
+# Yi Xiao - Personal Academic Homepage
 
-A clean, modern academic homepage for Yi Xiao, Master student. This template provides a professional presentation of academic achievements, experience, and research.
+这是一个现代化的个人学术主页，具有响应式设计和动态内容管理。
 
-## Features
+## 特点
 
-- 🎨 Clean and professional design
-- 📱 Fully responsive layout
-- ⚡ Fast loading static pages
-- 🔗 Smooth navigation
-- 📊 Organized content sections
-- 🌟 Hover effects and animations
-- 🎯 Academic-focused layout
+- **现代化设计**: 清洁的绿色主题，专业的排版
+- **响应式布局**: 适配各种设备屏幕
+- **动态内容**: 通过配置文件管理所有内容
+- **BibTeX 支持**: 可显示和复制论文引用
+- **平滑动画**: 优雅的页面交互效果
 
-## Page Sections
+## 文件结构
 
-1. **Home** - Personal introduction with name and title
-2. **About Me** - Brief personal and academic description
-3. **Publications** - List of academic papers and research
-4. **Experience** - Professional and research experience
-5. **Education** - Academic background and degrees
-6. **Services** - Academic service activities and reviews
-7. **Awards** - Recognition and achievements
-8. **Contact Me** - Contact information and academic profiles
+- `index.html` - 主页面结构
+- `styles.css` - 样式表
+- `script.js` - JavaScript 功能
+- `config.js` - 网站配置数据
+- `profile.jpg` - 个人头像
+- `README.md` - 说明文档
 
-## File Structure
+## 使用方法
 
-```
-pages/
-├── index.html          # Main page
-├── styles.css          # Stylesheet
-├── script.js          # JavaScript functionality
-├── profile.jpg        # Profile photo placeholder
-└── README.md          # Documentation
-```
+### 1. 直接使用
+双击 `index.html` 文件即可在浏览器中打开网站。
 
-## Quick Start
+### 2. 更新内容
+只需要编辑 `config.js` 文件中的数据：
 
-1. Open `index.html` in your browser to preview the site
-2. Customize the content according to your information
-3. Replace the profile photo with your own image
-4. Update contact information and links
-
-## Customization Guide
-
-### 1. Personal Information
-
-Update the following in `index.html`:
-
-- **Name**: Replace "Yi Xiao" with your name
-- **Title**: Change "Master Student" to your current position
-- **Institution**: Update university and department information
-- **Research Interests**: Modify the research areas
-
-### 2. About Section
-
-Edit the personal description in the About Me section to reflect your background and current research focus.
-
-### 3. Publications
-
-Add your publications in the Publications section:
-
-```html
-<div class="publication-item">
-    <div class="pub-year">Year</div>
-    <div class="pub-content">
-        <h4 class="pub-title">Paper Title</h4>
-        <p class="pub-authors">Author List</p>
-        <p class="pub-venue">Conference/Journal Name</p>
-        <div class="pub-links">
-            <a href="link" class="pub-link">PDF</a>
-            <a href="link" class="pub-link">Code</a>
-        </div>
-    </div>
-</div>
+```javascript
+const siteConfig = {
+  "personal": {
+    "name": "你的名字",
+    "title": "你的职位",
+    ...
+  },
+  "publications": [...],
+  "experience": [...],
+  ...
+};
 ```
 
-### 4. Experience
+### 3. 支持的内容类型
 
-Update your professional experience:
+- **个人信息**: 姓名、职位、邮箱、链接
+- **关于**: 自我介绍段落
+- **发表论文**: 支持BibTeX引用
+- **工作经历**: 实习、工作经验
+- **教育背景**: 学历信息
+- **学术服务**: 审稿、会议参与
+- **获奖情况**: 奖项和荣誉
 
-```html
-<div class="experience-item">
-    <div class="exp-period">Date Range</div>
-    <div class="exp-content">
-        <h3>Position Title</h3>
-        <h4>Institution/Company</h4>
-        <p>Description of responsibilities and achievements</p>
-    </div>
-</div>
-```
+## 添加新论文
 
-### 5. Education
+在 `config.js` 的 `publications` 数组中添加新条目：
 
-Modify your educational background:
-
-```html
-<div class="education-item">
-    <div class="edu-period">Date Range</div>
-    <div class="edu-content">
-        <h3>Degree</h3>
-        <h4>University</h4>
-        <p>Additional information (GPA, honors, etc.)</p>
-    </div>
-</div>
-```
-
-### 6. Services and Awards
-
-Update the Services and Awards sections with your own academic service activities and recognitions.
-
-### 7. Contact Information
-
-Modify the contact details in the Contact Me section:
-
-```html
-<div class="contact-item">
-    <i class="fas fa-envelope"></i>
-    <div>
-        <h4>Email</h4>
-        <p>your.email@university.edu</p>
-    </div>
-</div>
-```
-
-Update social media and academic profile links as needed.
-
-## Color Theme Customization
-
-Modify color variables in the `:root` section of `styles.css`:
-
-```css
-:root {
-    --primary-color: #2563eb;    /* Primary color */
-    --secondary-color: #1e40af;  /* Secondary color */
-    --accent-color: #3b82f6;     /* Accent color */
-    --text-primary: #1f2937;     /* Primary text color */
-    --text-secondary: #6b7280;   /* Secondary text color */
-    /* Other color variables... */
+```javascript
+{
+  "year": "2025",
+  "title": "您的论文标题",
+  "authors": "<strong>Yi Xiao</strong>, 合作者姓名",
+  "venue": "会议或期刊名称",
+  "links": [
+    {"name": "PDF", "url": "论文链接"},
+    {"name": "Code", "url": "代码链接"}
+  ],
+  "bibtex": "@inproceedings{citation_key,\n  author = {作者},\n  title = {标题},\n  ...\n}"
 }
 ```
 
-## Deployment
+## 自定义主题
 
-### GitHub Pages
-1. Push code to GitHub repository
-2. Enable GitHub Pages in repository settings
-3. Select main branch as source
+要更改主题色彩，编辑 `styles.css` 文件中的 `:root` 变量：
 
-### Netlify
-1. Drag folder to Netlify deployment interface
-2. Or connect GitHub repository for automatic deployment
+```css
+:root {
+    --primary-color: #2d5a27;  /* 主色调 */
+    --accent-color: #4a7c59;   /* 强调色 */
+    --text-color: #333;        /* 文本色 */
+    ...
+}
+```
 
-### Traditional Hosting
-1. Upload all files to website root directory
-2. Ensure `index.html` is in the root directory
+## 部署
 
-## Browser Compatibility
+将所有文件上传到你的网站服务器即可。支持：
+- GitHub Pages
+- Netlify
+- Vercel
+- 任何静态网站托管服务
 
+## 技术栈
+
+- HTML5
+- CSS3 (Grid, Flexbox, CSS Variables)
+- Vanilla JavaScript
+- Font Awesome 图标
+- Google Fonts 字体
+
+## 浏览器兼容性
+
+支持所有现代浏览器：
 - Chrome 60+
-- Firefox 60+
+- Firefox 55+
 - Safari 12+
 - Edge 79+
-
-## License
-
-This template can be freely used and modified for academic purposes.
-
----
-
-**Note**: This is a simplified academic homepage template designed specifically for Yi Xiao. Customize the content to match your personal academic profile and achievements.

@@ -1,5 +1,146 @@
+// Data loading and rendering
+let siteData = {};
+
+// Load configuration data
+async function loadSiteData() {
+    // 直接使用config.js中的siteConfig变量
+    siteData = siteConfig;
+    renderSite();
+}
+
+// Render the entire site
+function renderSite() {
+    renderPersonalInfo();
+    renderAbout();
+    renderPublications();
+    renderExperience();
+    renderEducation();
+    renderServices();
+    renderAwards();
+}
+
+// Render personal information
+function renderPersonalInfo() {
+    const personal = siteData.personal;
+    
+    // Update hero section
+    document.querySelector('.hero-title').textContent = personal.name;
+    document.querySelector('.hero-subtitle').textContent = personal.title;
+    
+    const description = `${personal.affiliation}<br>Research Interests:<br>${personal.research_interests.join(', ')}`;
+    document.querySelector('.hero-description').innerHTML = description;
+    
+    // Update contact info
+    const contactInfo = document.querySelector('.contact-info');
+    contactInfo.innerHTML = `
+        <a href="mailto:${personal.email}" class="contact-link">
+            <i class="fas fa-envelope"></i> ${personal.email}
+        </a>
+        ${personal.links.map(link => `
+            <span class="contact-separator">|</span>
+            <a href="${link.url}" class="contact-link">
+                <i class="${link.icon}"></i> ${link.name}
+            </a>
+        `).join('')}
+    `;
+}
+
+// Render about section
+function renderAbout() {
+    const aboutText = document.querySelector('.about-text');
+    aboutText.innerHTML = siteData.about.map(item => `<p>${item.text}</p>`).join('');
+}
+
+// Render publications
+function renderPublications() {
+    const publicationsList = document.querySelector('.publications-list');
+    publicationsList.innerHTML = siteData.publications.map((pub, index) => `
+        <div class="publication-item">
+            <div class="pub-year">${pub.year}</div>
+            <div class="pub-content">
+                <h4 class="pub-title">${pub.title}</h4>
+                <p class="pub-authors">${pub.authors}</p>
+                <p class="pub-venue">${pub.venue}</p>
+                <div class="pub-links">
+                    ${pub.links.map(link => `<a href="${link.url}" class="pub-link">${link.name}</a>`).join('')}
+                    <button class="pub-link cite-btn" onclick="toggleCitation('citation-${pub.year}-${index}')">Citation</button>
+                </div>
+                <div class="citation-block" id="citation-${pub.year}-${index}">
+                    <div class="citation-header">
+                        <span>BibTeX</span>
+                        <button class="copy-btn" onclick="copyCitation('citation-${pub.year}-${index}')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <pre class="citation-code">${pub.bibtex}</pre>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Render experience
+function renderExperience() {
+    const experienceList = document.querySelector('.experience-list');
+    experienceList.innerHTML = siteData.experience.map(exp => `
+        <div class="experience-item">
+            <div class="exp-period">${exp.period}</div>
+            <div class="exp-content">
+                <h3>${exp.position}</h3>
+                <h4>${exp.organization}</h4>
+                ${exp.description ? `<p>${exp.description}</p>` : ''}
+            </div>
+        </div>
+    `).join('');
+}
+
+// Render education
+function renderEducation() {
+    const educationList = document.querySelector('.education-list');
+    educationList.innerHTML = siteData.education.map(edu => `
+        <div class="education-item">
+            <div class="edu-period">${edu.period}</div>
+            <div class="edu-content">
+                <h3>${edu.degree}</h3>
+                <h4>${edu.institution}</h4>
+                ${edu.description ? `<p>${edu.description}</p>` : ''}
+            </div>
+        </div>
+    `).join('');
+}
+
+// Render services
+function renderServices() {
+    const servicesContent = document.querySelector('.services-content');
+    servicesContent.innerHTML = siteData.services.map(service => `
+        <div class="service-category">
+            <h3>${service.category}</h3>
+            <ul>
+                ${service.items.map(item => `<li>${item}</li>`).join('')}
+            </ul>
+        </div>
+    `).join('');
+}
+
+// Render awards
+function renderAwards() {
+    const awardsList = document.querySelector('.awards-list');
+    awardsList.innerHTML = siteData.awards.map(award => `
+        <div class="award-item">
+            <div class="award-year">${award.year}</div>
+            <div class="award-content">
+                <h3>${award.title}</h3>
+                <p>${award.organization}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
 // Mobile navigation menu toggle
 document.addEventListener('DOMContentLoaded', function() {
+    // Load site data first
+    loadSiteData();
+    
     const navToggle = document.getElementById('mobile-menu');
     const navMenu = document.getElementById('nav-menu');
     
@@ -17,6 +158,40 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Citation functionality
+function toggleCitation(citationId) {
+    const citationBlock = document.getElementById(citationId);
+    const isVisible = citationBlock.style.display === 'block';
+    
+    // Hide all other citation blocks
+    document.querySelectorAll('.citation-block').forEach(block => {
+        block.style.display = 'none';
+    });
+    
+    // Toggle current citation block
+    citationBlock.style.display = isVisible ? 'none' : 'block';
+}
+
+function copyCitation(citationId) {
+    const citationBlock = document.getElementById(citationId);
+    const codeText = citationBlock.querySelector('.citation-code').textContent;
+    
+    navigator.clipboard.writeText(codeText).then(function() {
+        // Show feedback
+        const copyBtn = citationBlock.querySelector('.copy-btn');
+        const originalContent = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+        copyBtn.style.color = 'var(--primary-color)';
+        
+        setTimeout(function() {
+            copyBtn.innerHTML = originalContent;
+            copyBtn.style.color = '';
+        }, 2000);
+    }).catch(function(err) {
+        console.error('Failed to copy citation: ', err);
+    });
+}
 
 // 平滑滚动到指定部分
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -181,14 +356,8 @@ function showNotification(message) {
 
 // Add click copy functionality for email
 document.addEventListener('DOMContentLoaded', function() {
-    const emailElements = document.querySelectorAll('p:contains("scholar@university.edu")');
-    emailElements.forEach(element => {
-        if (element.textContent.includes('scholar@university.edu')) {
-            element.style.cursor = 'pointer';
-            element.title = 'Click to copy email address';
-            element.addEventListener('click', copyEmail);
-        }
-    });
+    // Remove the problematic email click functionality for now
+    // This was causing the CSS selector error
 });
 
 // Back to top button
