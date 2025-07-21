@@ -1,4 +1,4 @@
-// 网站配置数据
+// Website configuration data
 const siteConfig = {
   "personal": {
     "name": "Yi Xiao",
@@ -65,7 +65,7 @@ const siteConfig = {
       "period": "2025 - Present",
       "position": "Internship",
       "organization": "Microsoft M365 Group",
-        //   "description": "Fortunated to be metored by <a href=\"https://marvin233.github.io/\" class=\"simple-link\">Minghua Ma</a>."
+      // "description": "Fortunated to be mentored by <a href=\"https://marvin233.github.io/\" class=\"simple-link\">Minghua Ma</a>."
     }
   ],
   "education": [

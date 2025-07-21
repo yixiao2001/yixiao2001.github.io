@@ -3,7 +3,7 @@ let siteData = {};
 
 // Load configuration data
 async function loadSiteData() {
-    // 直接使用config.js中的siteConfig变量
+    // Directly use siteConfig variable from config.js
     siteData = siteConfig;
     renderSite();
 }
@@ -193,13 +193,13 @@ function copyCitation(citationId) {
     });
 }
 
-// 平滑滚动到指定部分
+// Smooth scroll to specific sections
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            const offsetTop = target.offsetTop - 80; // 考虑固定导航栏的高度
+            const offsetTop = target.offsetTop - 80; // Account for fixed navbar height
             window.scrollTo({
                 top: offsetTop,
                 behavior: 'smooth'
