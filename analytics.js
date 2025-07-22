@@ -196,66 +196,9 @@ class VisitorAnalytics {
         if (diffDays < 7) return `${diffDays}d ago`;
         return date.toLocaleDateString();
     }
-
-    // Method to generate demo data for testing
-    generateDemoData() {
-        const demoCountries = [
-            { country: 'United States', city: 'New York' },
-            { country: 'China', city: 'Beijing' },
-            { country: 'Germany', city: 'Berlin' },
-            { country: 'United Kingdom', city: 'London' },
-            { country: 'Japan', city: 'Tokyo' },
-            { country: 'France', city: 'Paris' },
-            { country: 'Canada', city: 'Toronto' },
-            { country: 'Australia', city: 'Sydney' },
-            { country: 'India', city: 'Mumbai' },
-            { country: 'Brazil', city: 'São Paulo' }
-        ];
-
-        const demoVisitors = [];
-        for (let i = 0; i < 50; i++) {
-            const randomCountry = demoCountries[Math.floor(Math.random() * demoCountries.length)];
-            const randomDate = new Date();
-            randomDate.setDate(randomDate.getDate() - Math.floor(Math.random() * 30));
-            
-            demoVisitors.push({
-                country: randomCountry.country,
-                city: randomCountry.city,
-                timestamp: randomDate.toISOString(),
-                ip: `192.168.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`
-            });
-        }
-
-        localStorage.setItem('visitors', JSON.stringify(demoVisitors));
-        this.visitors = demoVisitors;
-        this.init();
-    }
 }
 
 // Initialize analytics when page loads
 document.addEventListener('DOMContentLoaded', () => {
     const analytics = new VisitorAnalytics();
-    
-    // Add a button to generate demo data for testing
-    if (analytics.visitors.length === 0) {
-        const demoButton = document.createElement('button');
-        demoButton.textContent = 'Generate Demo Data';
-        demoButton.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background: #059669;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1000;
-        `;
-        demoButton.onclick = () => {
-            analytics.generateDemoData();
-            demoButton.remove();
-        };
-        document.body.appendChild(demoButton);
-    }
 });
