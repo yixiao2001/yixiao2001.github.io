@@ -770,6 +770,61 @@ button.cite-btn {
     padding: 2rem 0;
 }
 
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.visitor-stats {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--border-radius);
+    min-width: 120px;
+}
+
+.stat-item i {
+    font-size: 1.25rem;
+    color: var(--accent-color);
+}
+
+.stat-item span:nth-child(2) {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: white;
+}
+
+.stat-item span:nth-child(3) {
+    font-size: 0.875rem;
+    color: #d1d5db;
+}
+
+@media (max-width: 768px) {
+    .visitor-stats {
+        gap: 1rem;
+    }
+    
+    .stat-item {
+        min-width: 100px;
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .stat-item span:nth-child(2) {
+        font-size: 1.1rem;
+    }
+}
+
 /* Experience Section Styles */
 .experience {
     background-color: var(--background-white);

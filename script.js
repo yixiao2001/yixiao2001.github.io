@@ -207,3 +207,85 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// Visitor tracking and analytics
+class VisitorTracker {
+    constructor() {
+        this.apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+        this.init();
+    }
+
+    init() {
+        this.trackVisitor();
+        this.loadVisitorStats();
+    }
+
+    // Track current visitor
+    async trackVisitor() {
+        try {
+            // Get visitor IP and location info
+            const response = await fetch('https://ipapi.co/json/');
+            const data = await response.json();
+            
+            // Store visitor data (you can send this to your analytics service)
+            this.storeVisitorData({
+                ip: data.ip,
+                country: data.country_name,
+                city: data.city,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                referrer: document.referrer
+            });
+        } catch (error) {
+            console.log('Visitor tracking failed:', error);
+        }
+    }
+
+    // Store visitor data (implement your storage method)
+    storeVisitorData(data) {
+        // Option 1: Send to your backend API
+        // fetch('/api/visitors', { method: 'POST', body: JSON.stringify(data) });
+        
+        // Option 2: Store in localStorage for demo purposes
+        let visitors = JSON.parse(localStorage.getItem('visitors') || '[]');
+        visitors.push(data);
+        localStorage.setItem('visitors', JSON.stringify(visitors));
+        
+        this.updateStats();
+    }
+
+    // Load and display visitor statistics
+    loadVisitorStats() {
+        // You can implement this to load stats from your backend
+        // For demo, we'll use localStorage
+        this.updateStats();
+    }
+
+    updateStats() {
+        const visitors = JSON.parse(localStorage.getItem('visitors') || '[]');
+        const totalVisits = visitors.length;
+        const uniqueCountries = new Set(visitors.map(v => v.country)).size;
+
+        document.getElementById('visitor-count').textContent = totalVisits.toLocaleString();
+        document.getElementById('visitor-countries').textContent = uniqueCountries;
+    }
+
+    // Method to get visitor map data
+    getVisitorMapData() {
+        const visitors = JSON.parse(localStorage.getItem('visitors') || '[]');
+        const countryStats = {};
+        
+        visitors.forEach(visitor => {
+            if (visitor.country) {
+                countryStats[visitor.country] = (countryStats[visitor.country] || 0) + 1;
+            }
+        });
+        
+        return countryStats;
+    }
+}
+
+// Initialize visitor tracking when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    new VisitorTracker();
+});
