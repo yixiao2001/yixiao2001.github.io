@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yi Xiao - Academic Homepage</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23171717'/%3E%3Cpath d='M10 9l6 7 6-7h4l-8 10v6h-4v-6L6 9z' fill='%23ffffff'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="config.js"></script>
     
     <!-- Google Analytics -->
@@ -19,35 +21,34 @@
     </script>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h2>Yi Xiao</h2>
-            </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#publications" class="nav-link">Publications</a>
+    <div class="main-wrapper">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2>Yi Xiao</h2>
+                </div>
+                <div class="nav-menu" id="nav-menu">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#publications" class="nav-link">Publications</a>
                 <a href="#experience" class="nav-link">Experience</a>
-                <a href="#education" class="nav-link">Education</a>
                 <a href="#services" class="nav-link">Services</a>
-                <a href="#awards" class="nav-link">Awards</a>
-                <a href="analytics.html" class="nav-link">Analytics</a>
+                    <a href="#awards" class="nav-link">Awards</a>
+                    <a href="analytics.html" class="nav-link">Analytics</a>
+                </div>
+                <div class="nav-toggle" id="mobile-menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
             </div>
-            <div class="nav-toggle" id="mobile-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
+        </nav>
 
-    <!-- Home Section -->
-    <section id="home" class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <div class="hero-text">
+        <!-- Home Section -->
+        <section id="home" class="hero">
+            <div class="hero-container">
+                <div class="hero-content">
                     <h1 class="hero-title">Loading...</h1>
                     <h2 class="hero-subtitle">Loading...</h2>
                     <p class="hero-description">Loading...</p>
@@ -58,91 +59,69 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- About Me Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <!-- About content will be loaded dynamically -->
+        <!-- About Me Section -->
+        <section id="about" class="about">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <!-- About content will be loaded dynamically -->
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Publications Section -->
-    <section id="publications" class="publications">
-        <div class="container">
-            <h2 class="section-title">Publications</h2>
-            <div class="publications-list">
-                <!-- Publications will be loaded dynamically -->
+        <!-- Publications Section -->
+        <section id="publications" class="publications">
+            <div class="container">
+                <h2 class="section-title">Publications</h2>
+                <div class="publications-list">
+                    <!-- Publications will be loaded dynamically -->
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Experience Section -->
-    <section id="experience" class="experience">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="experience-list">
-                <!-- Experience will be loaded dynamically -->
+        <!-- Experience Section -->
+        <section id="experience" class="experience">
+            <div class="container">
+                <h2 class="section-title">Experience</h2>
+                <div class="experience-list">
+                    <!-- Experience will be loaded dynamically -->
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Education Section -->
-    <section id="education" class="education-section">
-        <div class="container">
-            <h2 class="section-title">Education</h2>
-            <div class="education-list">
-                <!-- Education will be loaded dynamically -->
+        <!-- Services Section -->
+        <section id="services" class="services">
+            <div class="container">
+                <h2 class="section-title">Services</h2>
+                <div class="services-content">
+                    <!-- Services will be loaded dynamically -->
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Services Section -->
-    <section id="services" class="services">
-        <div class="container">
-            <h2 class="section-title">Services</h2>
-            <div class="services-content">
-                <!-- Services will be loaded dynamically -->
+        <!-- Awards Section -->
+        <section id="awards" class="awards">
+            <div class="container">
+                <h2 class="section-title">Awards</h2>
+                <div class="awards-list">
+                    <!-- Awards will be loaded dynamically -->
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Awards Section -->
-    <section id="awards" class="awards">
-        <div class="container">
-            <h2 class="section-title">Awards</h2>
-            <div class="awards-list">
-                <!-- Awards will be loaded dynamically -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
             <div class="footer-content">
-                <div class="visitor-stats">
-                    <div class="stat-item">
-                        <i class="fas fa-eye"></i>
-                        <span id="visitor-count">Loading...</span>
-                        <span>Total Visits</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-globe"></i>
-                        <span id="visitor-countries">Loading...</span>
-                        <span>Countries</span>
-                    </div>
-                </div>
                 <p>&copy; 2025 Yi Xiao. All rights reserved.</p>
             </div>
-        </div>
-    </footer>
+            </div>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
     

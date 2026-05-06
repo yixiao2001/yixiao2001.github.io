@@ -2,41 +2,58 @@
 const siteConfig = {
   "personal": {
     "name": "Yi Xiao",
-    "title": "Master Student",
+    "title": "PhD Student",
     "affiliation": "Chongqing University",
     "research_interests": [
       "Intelligent Software Engineering",
-      "Log Analytics", 
+      "Log Analytics",
       "Large Language Models"
     ],
-    "email": "yixiao@cqu.edu.cn",
+    "email": "xiaoyi@stu.cqu.edu.cn",
     "links": [
       {
         "name": "Google Scholar",
-        "icon": "fab fa-google",
-        "url": "#"
-      },
-      {
-        "name": "ORCID", 
-        "icon": "fab fa-orcid",
-        "url": "#"
+        "url": "https://scholar.google.com/citations?user=yiyzhSAAAAAJ&hl=en&oi=ao"
       },
       {
         "name": "GitHub",
-        "icon": "fab fa-github",
-        "url": "#"
+        "url": "https://github.com/yixiao2001"
+      },
+      {
+        "name": "ORCID",
+        "url": "https://orcid.org/my-orcid?orcid=0009-0008-0958-5726"
       }
     ]
   },
   "about": [
     {
-      "text": "I am a second-year master student at Chongqing University. I am fortunate to be advised by Prof. <a href=\"https://sites.google.com/site/hongyujohn/\" class=\"simple-link\">Hongyu Zhang</a>."
+      "text": "I am a PhD student at Chongqing University. I am fortunate to be advised by Prof. <a href=\"https://sites.google.com/site/hongyujohn/\" class=\"simple-link\">Hongyu Zhang</a>."
     },
     {
       "text": "I am interested in intelligent software engineering with a focus on NLP applications for software development, operation, and maintenance. My current research topics involve intelligent log analytics, robust and green application of LLMs in software engineering."
     }
   ],
   "publications": [
+    {
+      "year": "2026",
+      "title": "Knowledge-Augmented Log Anomaly Detection with Large Language Models",
+      "authors": "Yongliang Tao, Hongyu Zhang, Van-Hoang Le, <strong>Yi Xiao</strong>",
+      "venue": "Proceedings of the 48th International Conference on Software Engineering (ICSE 2026)",
+      "links": [
+        {"name": "PDF", "url": "#"}
+      ],
+      "bibtex": "@inproceedings{tao2026knowledge,\n  author = {Tao, Yongliang and Zhang, Hongyu and Le, Van-Hoang and Xiao, Yi},\n  title = {Knowledge-Augmented Log Anomaly Detection with Large Language Models},\n  booktitle = {Proceedings of the 48th International Conference on Software Engineering},\n  year = {2026},\n  publisher = {IEEE Computer Society},\n}"
+    },
+    {
+      "year": "2026",
+      "title": "TSGen: Automated Troubleshooting Guide Generation",
+      "authors": "<strong>Yi Xiao</strong>, Hongyu Zhang, Daniel Genkin, Chaoyun Zhang, Rujia Wang, Chetan Bansal, Bhala Ranganathan, Saravan Rajmohan, Minghua Ma",
+      "venue": "Proceedings of the ACM Conference on the Foundations of Software Engineering (FSE 2026), Industry Track",
+      "links": [
+        {"name": "PDF", "url": "#"}
+      ],
+      "bibtex": "@inproceedings{xiao2026tsgen,\n  author = {Xiao, Yi and Zhang, Hongyu and Genkin, Daniel and Zhang, Chaoyun and Wang, Rujia and Bansal, Chetan and Ranganathan, Bhala and Rajmohan, Saravan and Ma, Minghua},\n  title = {TSGen: Automated Troubleshooting Guide Generation},\n  booktitle = {Proceedings of the ACM Conference on the Foundations of Software Engineering, Industry Track},\n  year = {2026},\n  publisher = {ACM},\n}"
+    },
     {
       "year": "2025",
       "title": "Unleashing the True Potential of Semantic-based Log Parsing with Pre-trained Language Models",
@@ -62,7 +79,7 @@ const siteConfig = {
   ],
   "experience": [
     {
-      "period": "2025 - Present",
+      "period": "2025 - 2026",
       "position": "Internship",
       "organization": "Microsoft M365 Group",
       // "description": "Fortunated to be mentored by <a href=\"https://marvin233.github.io/\" class=\"simple-link\">Minghua Ma</a>."
@@ -84,22 +101,18 @@ const siteConfig = {
   ],
   "services": [
     {
-      "category": "Conference Reviews",
+      "category": "Conference Review & Sub-Review",
       "items": [
-        "ISSRE 2025 Artifact Evaluation Committee"
+        "ISSRE 2025 Artifact Evaluation Committee",
+        "ICSE 2026, FSE 2026, ISSTA 2026, ASE 2026 (Sub-Reviewer)"
       ]
     },
-      {
-        "category": "Sub-Reviews",
-        "items": [
-            "2025 - ICSE, FSE, ISSTA, ASE, KDD, etc."
-        ]
-      },
     {
       "category": "Academic Activities",
       "items": [
         "Attendee, ICSE 2025",
-        "Attendee, ASE 2024"
+        "Attendee, ASE 2024",
+        "Attendee, FSE 2026"
       ]
     }
   ],
