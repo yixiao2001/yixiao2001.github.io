@@ -1,0 +1,10 @@
+# WorkBuddy project data (local only)
+.workbuddy/
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Windows reserved-name accidents
+NUL

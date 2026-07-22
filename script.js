@@ -12,8 +12,7 @@ const SVG_ICONS = {
 };
 
 // Load configuration data
-async function loadSiteData() {
-    // Directly use siteConfig variable from config.js
+function loadSiteData() {
     siteData = siteConfig;
     renderSite();
 }
@@ -26,6 +25,8 @@ function renderSite() {
     renderExperience();
     renderServices();
     renderAwards();
+    initReveal();
+    initScrollSpy();
 }
 
 // Copy email to clipboard and show inline toast
@@ -53,13 +54,15 @@ function copyEmail(email, el) {
 function renderPersonal() {
     const personal = siteData.personal;
 
-    // Update hero section
     document.querySelector('.hero-title').textContent = personal.name;
     document.querySelector('.hero-subtitle').textContent = `${personal.title}, ${personal.affiliation}`;
-    document.querySelector('.hero-description').innerHTML = personal.research_interests.join(' • ');
 
-    // Update contact info with SVG icons
-    const contactInfo = document.querySelector('.contact-info');
+    // Research interest tags
+    document.getElementById('hero-tags').innerHTML = personal.research_interests
+        .map(tag => `<span class="tag">${tag}</span>`).join('');
+
+    // Contact links with SVG icons
+    const contactInfo = document.getElementById('contact-info');
     const icon = (name) => SVG_ICONS[name] || '';
     const allLinks = [
         { name: 'Email', url: `mailto:${personal.email}` },
@@ -68,12 +71,12 @@ function renderPersonal() {
     contactInfo.innerHTML = allLinks.map(link => {
         const isEmail = link.name === 'Email';
         return isEmail ? `
-        <span class="contact-link contact-link-email" onclick="copyEmail('${personal.email}', this)">
+        <span class="contact-link contact-link-email" onclick="copyEmail('${personal.email}', this)" title="${personal.email}">
             ${icon(link.name)}
             <span>${link.name}</span>
         </span>
         ` : `
-        <a href="${link.url}" class="contact-link" target="_blank">
+        <a href="${link.url}" class="contact-link" target="_blank" rel="noopener">
             ${icon(link.name)}
             <span>${link.name}</span>
         </a>
@@ -82,8 +85,8 @@ function renderPersonal() {
 
 // Render about section
 function renderAbout() {
-    const aboutText = document.querySelector('.about-text');
-    aboutText.innerHTML = siteData.about.map(paragraph => `<p>${paragraph.text}</p>`).join('');
+    document.querySelector('.about-text').innerHTML =
+        siteData.about.map(paragraph => `<p>${paragraph.text}</p>`).join('');
 }
 
 // Render publications
@@ -91,33 +94,40 @@ function renderPublications() {
     const publicationsList = document.querySelector('.publications-list');
     publicationsList.innerHTML = siteData.publications.map((pub, index) => `
         <div class="publication-item">
-            <div class="pub-year">${pub.year}</div>
-            <div class="pub-content">
-                <h4 class="pub-title">${pub.title}</h4>
-                <p class="pub-authors">${pub.authors}</p>
-                <p class="pub-venue">${pub.venue}</p>
-                <div class="pub-links">
-                    ${pub.links.map(link => `<a href="${link.url}" class="pub-link">${link.name}</a>`).join('')}
-                    <button class="pub-link cite-btn" onclick="toggleCitation('citation-${pub.year}-${index}')">Citation</button>
+            <div class="pub-badges">
+                <span class="badge badge-venue">${pub.venue_short}</span>
+                <span class="badge badge-ccf">${pub.ccf}</span>
+                ${pub.method ? `<span class="badge badge-method">${pub.method}</span>` : ''}
+            </div>
+            <h4 class="pub-title">${pub.title}</h4>
+            <p class="pub-authors">${pub.authors}</p>
+            <p class="pub-venue">${pub.venue}</p>
+            ${pub.description ? `<p class="pub-desc">${pub.description}</p>` : ''}
+            <div class="pub-links">
+                ${pub.links.map(link => `<a href="${link.url}" class="pub-link" target="_blank" rel="noopener">${link.name}</a>`).join('')}
+                <button class="pub-link cite-btn" onclick="toggleCitation('citation-${index}')">BibTeX</button>
+            </div>
+            <div class="citation-block" id="citation-${index}">
+                <div class="citation-header">
+                    <span>BibTeX</span>
+                    <button class="copy-btn" onclick="copyCitation('citation-${index}')">Copy</button>
                 </div>
-                <div class="citation-block" id="citation-${pub.year}-${index}">
-                    <div class="citation-header">
-                        <span>BibTeX</span>
-                        <button class="copy-btn" onclick="copyCitation('citation-${pub.year}-${index}')">
-                            Copy
-                        </button>
-                    </div>
-                    <pre class="citation-code">${pub.bibtex}</pre>
-                </div>
+                <pre class="citation-code">${pub.bibtex}</pre>
             </div>
         </div>
     `).join('');
+
+    // Subtle link to the research org for more open-source tools
+    const org = siteData.projects_org;
+    if (org) {
+        document.getElementById('pubs-more').innerHTML =
+            `More open-source log analysis tools at <a href="${org.url}" target="_blank" rel="noopener">${org.name} &rarr;</a>`;
+    }
 }
 
 // Render experience
 function renderExperience() {
-    const experienceList = document.querySelector('.experience-list');
-    experienceList.innerHTML = siteData.experience.map(exp => `
+    document.querySelector('.experience-list').innerHTML = siteData.experience.map(exp => `
         <div class="experience-item">
             <div class="exp-period">${exp.period}</div>
             <div class="exp-content">
@@ -131,8 +141,7 @@ function renderExperience() {
 
 // Render services
 function renderServices() {
-    const servicesContent = document.querySelector('.services-content');
-    servicesContent.innerHTML = siteData.services.map(service => `
+    document.querySelector('.services-content').innerHTML = siteData.services.map(service => `
         <div class="service-category">
             <h3>${service.category}</h3>
             <ul>
@@ -144,8 +153,7 @@ function renderServices() {
 
 // Render awards
 function renderAwards() {
-    const awardsList = document.querySelector('.awards-list');
-    awardsList.innerHTML = siteData.awards.map(award => `
+    document.querySelector('.awards-list').innerHTML = siteData.awards.map(award => `
         <div class="award-item">
             <div class="award-year">${award.year}</div>
             <div class="award-content">
@@ -156,22 +164,59 @@ function renderAwards() {
     `).join('');
 }
 
-// Mobile navigation menu toggle
+// Scroll reveal animation
+function initReveal() {
+    const els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+        els.forEach(el => el.classList.add('visible'));
+        return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08 });
+    els.forEach(el => observer.observe(el));
+}
+
+// Scroll-spy: highlight nav link of the current section
+function initScrollSpy() {
+    const links = Array.from(document.querySelectorAll('.nav-link[href^="#"]'));
+    const sections = links
+        .map(link => document.querySelector(link.getAttribute('href')))
+        .filter(Boolean);
+
+    function onScroll() {
+        const pos = window.scrollY + 120;
+        let current = null;
+        sections.forEach(sec => {
+            if (sec.offsetTop <= pos) current = sec.id;
+        });
+        links.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+        });
+        document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 8);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+}
+
+// Mobile navigation & bootstrap
 document.addEventListener('DOMContentLoaded', function() {
-    // Load site data first
     loadSiteData();
 
     const mobileMenu = document.getElementById('mobile-menu');
     const navMenu = document.getElementById('nav-menu');
-    
+
     mobileMenu.addEventListener('click', function() {
         navMenu.classList.toggle('active');
         mobileMenu.classList.toggle('active');
     });
 
-    // Close menu when clicking navigation links
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
+    document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function() {
             navMenu.classList.remove('active');
             mobileMenu.classList.remove('active');
@@ -183,13 +228,11 @@ document.addEventListener('DOMContentLoaded', function() {
 function toggleCitation(citationId) {
     const citationBlock = document.getElementById(citationId);
     const isVisible = citationBlock.style.display === 'block';
-    
-    // Hide all other citation blocks
+
     document.querySelectorAll('.citation-block').forEach(block => {
         block.style.display = 'none';
     });
-    
-    // Toggle current citation block
+
     citationBlock.style.display = isVisible ? 'none' : 'block';
 }
 
@@ -198,54 +241,52 @@ function copyCitation(citationId) {
     const codeText = citationBlock.querySelector('.citation-code').textContent;
 
     navigator.clipboard.writeText(codeText).then(function() {
-        // Show feedback
         const copyBtn = citationBlock.querySelector('.copy-btn');
         const originalContent = copyBtn.textContent;
         copyBtn.textContent = 'Copied!';
-        copyBtn.style.color = 'var(--link-blue)';
-
         setTimeout(function() {
             copyBtn.textContent = originalContent;
-            copyBtn.style.color = '';
         }, 2000);
     }).catch(function(err) {
         console.error('Failed to copy citation: ', err);
     });
 }
 
-// Visitor tracking
-function trackVisitor() {
-    try {
-        fetch('https://ipapi.co/json/')
-            .then(function(r) { return r.json(); })
-            .then(function(data) {
-                var visitors = JSON.parse(localStorage.getItem('visitors') || '[]');
-                visitors.push({
-                    country: data.country_name,
-                    city: data.city,
-                    timestamp: new Date().toISOString()
-                });
-                localStorage.setItem('visitors', JSON.stringify(visitors));
-            })
-            .catch(function() {});
-    } catch(e) {}
+/* ============================================
+   Visitor statistics (global, via counterapi.dev)
+   - Increments a total counter and a per-day counter
+   - Deduped per browser session so refreshes don't inflate counts
+   ============================================ */
+const COUNTER_NS = 'yixiao-homepage';
+const COUNTER_API = `https://api.counterapi.dev/v1/${COUNTER_NS}`;
+
+function counterDateKey(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `d-${y}-${m}-${day}`;
 }
 
-document.addEventListener('DOMContentLoaded', trackVisitor);
-
-// Smooth scroll to specific sections
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            const offsetTop = target.offsetTop - 80; // Account for fixed navbar height
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
-            });
+function trackVisit() {
+    const footerEl = document.getElementById('footer-visits');
+    try {
+        if (sessionStorage.getItem('visit-counted')) {
+            // Already counted this session — just display current total
+            fetch(`${COUNTER_API}/main/`)
+                .then(r => r.json())
+                .then(data => { if (footerEl && data.count != null) footerEl.textContent = data.count; })
+                .catch(() => {});
+            return;
         }
-    });
-});
+        sessionStorage.setItem('visit-counted', '1');
 
+        fetch(`${COUNTER_API}/main/up`)
+            .then(r => r.json())
+            .then(data => { if (footerEl && data.count != null) footerEl.textContent = data.count; })
+            .catch(() => {});
 
+        fetch(`${COUNTER_API}/${counterDateKey(new Date())}/up`).catch(() => {});
+    } catch (e) {}
+}
+
+document.addEventListener('DOMContentLoaded', trackVisit);
