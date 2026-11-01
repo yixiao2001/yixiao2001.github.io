@@ -71,10 +71,10 @@ function renderPersonal() {
     contactInfo.innerHTML = allLinks.map(link => {
         const isEmail = link.name === 'Email';
         return isEmail ? `
-        <span class="contact-link contact-link-email" onclick="copyEmail('${personal.email}', this)" title="${personal.email}">
+        <button type="button" class="contact-link contact-link-email" aria-label="Copy email address" onclick="copyEmail('${personal.email}', this)" title="${personal.email}">
             ${icon(link.name)}
-            <span>${link.name}</span>
-        </span>
+            <span>Copy email</span>
+        </button>
         ` : `
         <a href="${link.url}" class="contact-link" target="_blank" rel="noopener">
             ${icon(link.name)}
@@ -99,13 +99,13 @@ function renderPublications() {
                 <span class="badge badge-ccf">${pub.ccf}</span>
                 ${pub.method ? `<span class="badge badge-method">${pub.method}</span>` : ''}
             </div>
-            <h4 class="pub-title">${pub.title}</h4>
+            <h3 class="pub-title"><a href="${pub.links[0].url}" target="_blank" rel="noopener">${pub.title}</a></h3>
             <p class="pub-authors">${pub.authors}</p>
             <p class="pub-venue">${pub.venue}</p>
             ${pub.description ? `<p class="pub-desc">${pub.description}</p>` : ''}
             <div class="pub-links">
                 ${pub.links.map(link => `<a href="${link.url}" class="pub-link" target="_blank" rel="noopener">${link.name}</a>`).join('')}
-                <button class="pub-link cite-btn" onclick="toggleCitation('citation-${index}')">BibTeX</button>
+                <button class="pub-link cite-btn" aria-expanded="false" aria-controls="citation-${index}" onclick="toggleCitation('citation-${index}')">BibTeX</button>
             </div>
             <div class="citation-block" id="citation-${index}">
                 <div class="citation-header">
@@ -214,12 +214,23 @@ document.addEventListener('DOMContentLoaded', function() {
     mobileMenu.addEventListener('click', function() {
         navMenu.classList.toggle('active');
         mobileMenu.classList.toggle('active');
+        mobileMenu.setAttribute('aria-expanded', String(navMenu.classList.contains('active')));
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && navMenu.classList.contains('active')) {
+            navMenu.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            mobileMenu.setAttribute('aria-expanded', 'false');
+            mobileMenu.focus();
+        }
     });
 
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', function() {
             navMenu.classList.remove('active');
             mobileMenu.classList.remove('active');
+            mobileMenu.setAttribute('aria-expanded', 'false');
         });
     });
 });
@@ -234,6 +245,9 @@ function toggleCitation(citationId) {
     });
 
     citationBlock.style.display = isVisible ? 'none' : 'block';
+    document.querySelectorAll('.cite-btn').forEach(button => {
+        button.setAttribute('aria-expanded', String(!isVisible && button.getAttribute('aria-controls') === citationId));
+    });
 }
 
 function copyCitation(citationId) {
