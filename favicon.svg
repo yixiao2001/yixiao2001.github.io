@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><style>path{fill:#202024}@media(prefers-color-scheme:dark){path{fill:#f4f4f1}}</style><path d="M10 36C11 16 31 5 50 14L44 24 32 20 20 32 20 36ZM54 28C53 48 33 59 14 50L20 40 32 44 44 32 44 28Z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+  <rect x="1.5" y="1.5" width="61" height="61" rx="14.5" stroke="#ffffff" stroke-opacity="0.16" stroke-width="1.5"/>
+  <!-- Y -->
+  <path d="M12.5 19L20.5 32.5V45H25.5V32.5L33.5 19H28L23 28L18 19H12.5Z" fill="#ffffff"/>
+  <!-- X -->
+  <path d="M35.5 19L43.2 31.8L35 45H40.4L46.1 35.4L51.8 45H57.2L49 31.8L56.7 19H51.3L46.1 28.1L40.9 19H35.5Z" fill="#93c5fd"/>
+</svg>
